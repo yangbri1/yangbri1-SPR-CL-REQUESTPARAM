@@ -31,22 +31,37 @@ public class SearchController {
      */
     @GetMapping(value = "cats", params = {"term", "format"})
     public String[] getSearchTermAndPage(@RequestParam String term, @RequestParam String format){
-        return new String[]{term, format};
+        return new String[]{term, format};  // String ary of size 2 -- w/ 'term' & 'format' query params
     }
     /**
      * TODO: extract the numeric 'amount' query parameter from a request, such as GET localhost:9000/cats?amount=50,
      * returning 50.
      */
     @GetMapping(value = "cats", params = {"amount"})
-    public int getSearchFormat(){
-        return 0;
+    // IMPORTANT: include '@RequestParam String amount' --- wanted query parameters as params to @GetMapping's method otw Java views 'amount' as a variable unknowingly
+    public int getSearchFormat(@RequestParam int amount){  
+        /* 1st way ... this may be safer in other languages --- i.e., JavaScript where query params are viewed by default in String datatypes ...
+        so they will be extracted & returned as String too --- despite it could be viewed as number, boolean, etc. */  
+        
+        // both type-cast retrieved 'amount' query params from String into 'int' value
+        // return Integer.parseInt(amount);  
+        // return Integer.valueOf(amount);
+        // return (int) amount;    // explicit type-casting from String to int DN seem to work in Java
+
+        /* 2nd way ... */
+        /* INTERESTING!! --- Unlike in JavaScript where query params are of String type by default ---
+         * here if initialize query param to a certain data type in params above to 'int' in .getSearchFormat(@RequestParm int amount) ...
+         * we can just return 'amount' by itself as this method is looking for 'amount' in as an 'int'
+        */
+        return amount;             
     }
     /**
      * TODO: extract the String 'format' and 'orderBy' query parameters from a request, such as
      * GET localhost:9000/cats?format=gif&orderby=new, returning a String array such as {"gif", "new"}
      */
     @GetMapping(value = "cats", params = {"format", "orderBy"})
-    public String[] getSearchFormatAndAmount(){
-        return null;
+    public String[] getSearchFormatAndAmount(@RequestParam String format, @RequestParam String orderBy){     // Notice: return type of String[] ary
+        String[] queryStrAry = new String[]{format, orderBy};
+        return queryStrAry;
     }
 }
