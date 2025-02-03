@@ -40,9 +40,10 @@ public class SearchController {
     @GetMapping(value = "cats", params = {"amount"})
     // IMPORTANT: include '@RequestParam String amount' --- wanted query parameters as params to @GetMapping's method otw Java views 'amount' as a variable unknowingly
     public int getSearchFormat(@RequestParam int amount){  
-        /* 1st way ... this may be safer in other languages --- i.e., JavaScript where query params are viewed by default in String datatypes ...
+        /* 1st way ... */ 
+        /* this may be safer in other languages --- i.e., JavaScript where query params are viewed by default in String datatypes ...
         so they will be extracted & returned as String too --- despite it could be viewed as number, boolean, etc. */  
-        
+
         // both type-cast retrieved 'amount' query params from String into 'int' value
         // return Integer.parseInt(amount);  
         // return Integer.valueOf(amount);
